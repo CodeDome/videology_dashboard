@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+    <title>videology主页</title>
+    <link rel="stylesheet" href="css/dashboard.css" type="text/css">
+    <link rel="stylesheet" href="datatables/css/jquery.dataTables.css" type="text/css">
+    <link rel="stylesheet" href="javascript/libs/loading/jquery.shCircleLoader.css" type="text/css">
+
+    <!--导出功能的样式-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.css"/>
+
+
+
+    <script src="config/ipconfig.js"></script>
+</head>
+<body>
+<div class="container">
+    <div id="shclProgress" style="position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: auto;width: 100px;height: 100px;z-index: 10000"></div>
+    <div class="top">
+
+            <div class="top-left">
+                <div class="gap">
+                 <div class="key-explain">
+                     <label>videology指标解释:</label>
+                     <a class="enter-explain" href="https://shimo.im/docs/OPruqDnymFoGV6tL">进入查看</a>
+                 </div>
+                 <div class="time">
+                    <label class="query_time">查询时间：</label><br>
+                    <div class="input">
+                        <input class="input1" id="input1" type="text" autocomplete="off" placeholder="起始时间"  height="50" >
+                        <label style="color: white;margin-left: 5px;margin-right: 5px;">至</label>
+                        <input class="input2" id="input2" type="text" autocomplete="off" placeholder="结束时间"  height="50" >
+                    </div>
+                </div>
+                 <div class="class_select">
+                    <label class="class_level">学科：</label><br>
+                    <select class="sel select1" id="selects" onchange="getoptionChapter(0,this.value)">
+                        <option value="">全部</option>
+                        <option value="数学">数学</option>
+                        <option value="物理">物理</option>
+
+                    </select>
+                </div>
+                 <button class="query">查询</button>
+                </div>
+            </div>
+
+            <div class="top-right">
+                <div class="chart-top">
+                    <div class="chart1">
+                        <table class="table custom_tb" style="margin-top: 15px;">
+                            <thead>
+                           <tr>
+                                <td></td>
+                                <td>全部视频（次数）</td>
+                                <td>付费视频</td>
+                                <td class="tb-tag">付费率</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td class="rate-width">总次数</td>
+                                <td id="videAllCount">2356</td>
+                                <td class="chargeVideo">--</td>
+                                <td id="allP1">--</td>
+                            </tr>
+                             <tr>
+                                <td class="rate-width">认真观看次数</td>
+                                <td id="rzAllCount">2988</td>
+                                <td class="chargeVideo">--</td>
+                                <td id="allP2">--</td>
+                            </tr>
+                             <tr>
+                                <td class="rate-width tb-tag">认真观看率</td>
+                                <td id="rZrate">--</td>
+                                <td id="rZWhatchRate">--</td>
+                                <td class="rate-width tb-tag">--</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--<div class="chart2"></div>-->
+                </div>
+                <div class="chart-bottom">
+                    <div class="chart3">
+                        <div class="chart-2">
+                        <table class="table2 custom_tb">
+                            <thead>
+                           <tr>
+                                <td></td>
+                                <td>全部视频</td>
+                                <td>付费视频</td>
+                                <td>付费率 </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td>专项进入总次数</td>
+                                <td id="zxInterCount">2445</td>
+                                <td class="chargeVideo">--</td>
+                                <td id = "centerRate">--</td>
+                            </tr>
+
+                             <tr>
+                                <td class="rate-width">通过的总次数</td>
+                                <td id="passAllCount">2666</td>
+                                <td class="chargeVideo">--</td>
+                                <td class="rate-width" id="TgRate">--</td>
+                            </tr>
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                    <!--<div class="chart4"></div>-->
+                </div>
+              <!--   <div class="chart-middle">
+                    <div id="chart-dom"></div>
+
+                </div>-->
+            </div>
+
+    </div>
+    <div class="middle">
+        <div class="middle-left">
+            <div class="school_level">
+                <label class="select_tile">学段：</label><br>
+                <select class="select_schools" onchange="getoptionChapter(this.value,0)" id="school">
+                    <option value="">全部</option>
+                    <option value="小学">小学</option>
+                    <option value="初中">初中</option>
+                    <option value="高中">高中</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="middle-right">
+               <div class="stage_list">
+                       <table id="example2" class="display" cellspacing="0" width="98%">
+        <thead>
+            <tr>
+                <th>章节名称</th>
+                <th>观看次数</th>
+                <th>认真观看次数(观看时长大于70%)</th>
+                <th>认真观看率</th>
+                <th>完播成率</th>
+                <th>专项进入次数</th>
+                <th>专项通过次数</th>
+                <th>专项通过率</th>
+            </tr>
+        </thead>
+
+
+
+    </table>
+
+               </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="bottom-left">
+            <div class="chapter_select">
+                    <label class="chapter_title">课程章节：</label><br>
+                    <select class="sel chapt_select" id="chapter" onchange="chaptervideoLists()">
+                    <option value="">全部</option>
+
+                    </select>
+            </div>
+        </div>
+        <div class="bottom-right">
+                <div class="chapter_list">
+                   <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th style="display: none ">视频id</th>
+                <th>视频名称</th>
+                <th>所属大节名</th>
+                <th>小节名</th>
+                <th>观看次数</th>
+                <th>认真观看次数(观看时长大于70%)</th>
+                <th>认真观看率</th>
+                <th>完播成率</th>
+                <th>专项进入次数</th>
+                <th>专项通过次数</th>
+                <th>专项通过率</th>
+            </tr>
+        </thead>
+        <tbody id="videoLists">
+
+        </tbody>
+         <!-- <tbody id="videoList">
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+           <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+           <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+           <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+           <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+           <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+           <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+           <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+           <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+           <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+                <td>$320,800</td>
+            </tr>
+          </tbody>-->
+
+
+    </table>
+                </div>
+
+            </div>
+    </div>
+</div>
+<!--<script src="javascript/libs/jquery-3.3.1.min.js"></script>-->
+<script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+<script src="javascript/libs/echarts.js"></script>
+<script src="javascript/dashboard.js"></script>
+<script src="javascript/libs/layDate-v5.0.9/laydate/laydate.js"></script>
+<!--<script src="javascript/libs/layDate-v5.0.9/laydate/laydate.js"></script>-->
+<!--<script src="javascript/libs/laydate/laydate.js"></script>-->
+<!--<script type="text/javascript" src="http://s.59pi.com/js/jquery/laydate/laydate.js"></script>-->
+<script src="datatables/js/jquery.dataTables.js"></script>
+<!--<script src="http://cdn.datatables.net/plug-ins/1.10.19/sorting/numeric-comma.js"></script>-->
+
+<script src="javascript/libs/loading/jquery.shCircleLoader-min.js"></script>
+
+ <!--导出功能的样式-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.flash.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.html5.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.print.js"></script>
+<script src="javascript/dataTables.sort.plungin.js"></script>
+</body>
+</html>
